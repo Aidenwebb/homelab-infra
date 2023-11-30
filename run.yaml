@@ -1,0 +1,79 @@
+---
+  - hosts: opnsensefw01
+    connection: local
+    vars_files:
+      - 'vars/vault.yaml'
+    module_defaults:
+      group/ansibleguy.opnsense.all:
+        ssl_verify: false
+        firewall: "{{ ansible_host }}"
+        api_key: "{{ opnsensefw01.key }}"
+        api_secret: "{{ opnsensefw01.secret }}"
+
+      ansibleguy.opnsense.list:
+        target: 'interface_vlan'
+
+      ansibleguy.opnsense.reload:
+        target: 'interface_vlan'
+
+    tasks:
+      - name: Add Infra - OOB Management VLAN
+        ansibleguy.opnsense.interface_vlan:
+          description: "Infra - OOB Management"
+          interface: "igc0"
+          vlan: 110
+          priority: 0
+          # device: vlan0.0.110
+          reload: false
+
+      - name: Add Infra - BareMetal VLAN
+        ansibleguy.opnsense.interface_vlan:
+          description: "Infra - BareMetal Servers"
+          interface: "igc0"
+          vlan: 111
+          priority: 0
+          # device: vlan0.0.111
+          reload: false
+
+      - name: Add PAM - DataStores VLAN
+        ansibleguy.opnsense.interface_vlan:
+          description: "PAM - DataStores"
+          interface: "igc0"
+          vlan: 120
+          priority: 0
+          # device: vlan0.0.120
+          reload: false
+
+      - name: Add PAM - Applications VLAN
+        ansibleguy.opnsense.interface_vlan:
+          description: "PAM - Applications"
+          interface: "igc0"
+          vlan: 121
+          priority: 0
+          # device: vlan0.0.121
+          reload: false
+          
+
+      # At the moment, VLAN's need to be manually named via GUI, and manually assigned via GUI
+      # Assign vlan 110
+      #   description: InfraOOBManagement
+      #   interface: enabled
+      #   ipv4: static IPv4
+      #   ipv4_address: 10.130.0.1/25
+      # Assign vlan 111
+      #   description: 111InfraBareMetalServers
+      #   interface: enabled
+      #   ipv4: static IPv4
+      #   ipv4_address: 10.130.0.129/25
+      # Assign vlan 120
+      #   description: 120PAMDataStores
+      #   interface: enabled
+      #   ipv4: static IPv4
+      #   ipv4_address: 10.130.1.1/25
+      # Assign vlan 121
+      #   description: 121PAMApplications
+      #   interface: enabled
+      #   ipv4: static IPv4
+      #   ipv4_address: 10.130.1.129/25
+
+
