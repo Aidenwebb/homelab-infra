@@ -64,23 +64,15 @@
     # Create Template VM
     # wget https://cloud-images.ubuntu.com/jammy/20231027/jammy-server-cloudimg-amd64-disk-kvm.img
     # echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPn9qojusxZ6ghr4qzqV/kQwg2kp+86G5bo+vFZo67gF aiden@aidenwebb.com" | tee known_hosts
-    # qm create 10000 --memory 2048 --net0 virtio,bridge=vmbr0 --scsihw virtio-scsi-pci
+    # qm create 10000 --memory 2048 --net0 virtio,bridge=vmbr0 --scsihw virtio-scsi-pci --sockets 1 --cores 2 --hotplug network,disk,cpu,memory --agent enabled=1,fstrim_cloned_disks=1 --ostype l26 --name Template-ubnt2204
     # qm set 10000 --serial0 socket --vga serial0
     # qm set 10000 --scsi0 data:0,import-from=$PWD/jammy-server-cloudimg-amd64-disk-kvm.img
     # qm set 10000 --ide2 data:cloudinit
     # qm set 10000 --ciuser aiden
     # qm set 10000 --sshkeys known_hosts
     # qm set 10000 --boot order=scsi0
-    # qm set 10000 --name Template-ubnt2204
-    # qm set 10000 --agent enabled=1,fstrim_cloned_disks=1
-    # qm set 10000 --ostype l26
     # qm template 10000
 
     # Create MaaS PSQL VM
     # Reserve DHCP Address for VM in Opnsense ( 10.130.1.5 )
     # Create MaaS Application VM
-
-- hosts: maas_psql
-  vars_files:
-      - 'vars/vault.yaml'
-  
