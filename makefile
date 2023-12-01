@@ -1,6 +1,9 @@
 fw:
 	ansible-playbook run.yaml --limit opnsensefw01
 
+mgmt:
+	ansible-playbook run.yaml --limit mgmt_pve
+
 reqs:
 	pip3 install -r requirements.txt
 	ansible-galaxy install -r requirements.yaml

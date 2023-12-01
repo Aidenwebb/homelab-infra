@@ -3,7 +3,8 @@
 {
 	"name": "Debian",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	// "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	"dockerFile": "Dockerfile",
 	"features": {
 		"ghcr.io/devcontainers/features/terraform:1": {
 			"installTFsec": true,
@@ -24,7 +25,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ms-vscode.makefile-tools"
+				"ms-vscode.makefile-tools",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	}

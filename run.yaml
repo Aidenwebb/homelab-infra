@@ -18,4 +18,69 @@
 
     roles:
       - role: aaw-opnsense
-      
+
+  - hosts: mgmt_pve
+    connection: local
+    vars_files:
+      - 'vars/vault.yaml'
+    module_defaults:
+      community.general.proxmox_kvm:
+        api_user: "{{ mgmt_pve.proxmox_api_user }}"
+        api_token_id: "{{ mgmt_pve.proxmox_api_token_id }}"
+        api_token_secret: "{{ mgmt_pve.proxmox_api_token_secret }}"
+        api_host: "{{ mgmt_pve.proxmox_api_host }}"
+        sshkeys: "{{ mgmt_pve.proxmox_sshkeys }}"
+        node: 'mgmt'
+    # Make bridge VLAN aware
+    #   name: vmbr0
+    #   vlan_aware: true
+    #   bridge_ports: enps1s0
+    #   comment: Default Bridge
+    # Create BareMetal VLAN
+    #   name: vmbr0.111
+    #   comment: Baremetal Servers VNET
+    # Create PAM - DataStores VLAN
+    #   name: vmbr0.120
+    #   comment: PAM - DataStores
+    # Create PAM - Applications VLAN
+    #   name: vmbr0.121
+    #   comment: PAM - Applications
+
+    # Set up Data disk
+    # Create ZFS volume
+    #   name: data
+    #   device: /dev/sda
+    #   raid_level: single_disk
+    #   compression: on
+    #   ashift: 12
+
+    # Add ISOs
+    # Add Ubuntu 22.04 ISO
+    #   https://releases.ubuntu.com/22.04.3/ubuntu-22.04.3-live-server-amd64.iso
+    #   file: ubuntu-22.04.3-live-server-amd64.iso
+
+    
+    tasks:
+    # Create Template VM
+    # wget https://cloud-images.ubuntu.com/jammy/20231027/jammy-server-cloudimg-amd64-disk-kvm.img
+    # echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPn9qojusxZ6ghr4qzqV/kQwg2kp+86G5bo+vFZo67gF aiden@aidenwebb.com" | tee known_hosts
+    # qm create 10000 --memory 2048 --net0 virtio,bridge=vmbr0 --scsihw virtio-scsi-pci
+    # qm set 10000 --serial0 socket --vga serial0
+    # qm set 10000 --scsi0 data:0,import-from=$PWD/jammy-server-cloudimg-amd64-disk-kvm.img
+    # qm set 10000 --ide2 data:cloudinit
+    # qm set 10000 --ciuser aiden
+    # qm set 10000 --sshkeys known_hosts
+    # qm set 10000 --boot order=scsi0
+    # qm set 10000 --name Template-ubnt2204
+    # qm set 10000 --agent enabled=1,fstrim_cloned_disks=1
+    # qm set 10000 --ostype l26
+    # qm template 10000
+
+    # Create MaaS PSQL VM
+    # Reserve DHCP Address for VM in Opnsense ( 10.130.1.5 )
+    # Create MaaS Application VM
+
+- hosts: maas_psql
+  vars_files:
+      - 'vars/vault.yaml'
+  
