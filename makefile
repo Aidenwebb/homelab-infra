@@ -1,6 +1,9 @@
 fw:
 	ansible-playbook run.yaml --limit opnsensefw01
 
+hestia:
+	ansible-playbook run.yaml --limit hestiapi
+
 mgmt:
 	ansible-playbook run.yaml --limit mgmt_pve
 

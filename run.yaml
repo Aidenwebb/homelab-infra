@@ -100,9 +100,16 @@
   #   tasks:
   #     - name: Install PostgreSQL
 
-  - hosts: hestia
+  - hosts: hestiapi
     become: true
     roles:
       - role: grog.package
         tags: packages
+      - role: geerlingguy.docker
+      - role: aaw-mediaserver
 
+    tasks:
+
+
+
+        

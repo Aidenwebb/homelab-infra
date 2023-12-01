@@ -1,5 +1,6 @@
 roles:
 - src: grog.package
+- src: geerlingguy.docker
 
 collections:
 - ansibleguy.opnsense
