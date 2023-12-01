@@ -91,6 +91,8 @@
     roles:
       - role: aaw-qemu-guest
         tags: qemu-guest-agent
+      - role: grog.package
+        tags: packages
   
   # - hosts: maas_psql
   #   vars_files:

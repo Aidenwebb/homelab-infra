@@ -1,0 +1,23 @@
+---
+# generic settings
+main_username: aiden
+main_groupname: "{{ main_username }}"
+main_uid: "1000"
+main_gid: "{{ main_uid }}"
+
+# grog.package
+package_list:
+  - name: bash-completion
+  - name: curl
+  - name: git
+  - name: htop
+  - name: iftop
+  - name: iotop
+  - name: lm-sensors
+  - name: net-tools
+  - name: nmap
+  - name: openssh-server
+  - name: python3
+  - name: sudo
+  - name: tree
+  - name: wget
