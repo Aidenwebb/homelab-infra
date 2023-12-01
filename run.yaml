@@ -90,6 +90,7 @@
     become: true
     roles:
       - role: aaw-qemu-guest
+        tags: qemu-guest-agent
   
   # - hosts: maas_psql
   #   vars_files:

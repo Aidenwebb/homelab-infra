@@ -4,6 +4,9 @@ fw:
 mgmt:
 	ansible-playbook run.yaml --limit mgmt_pve
 
+agent:
+	ansible-playbook run.yaml --tags qemu-guest-agent
+
 reqs:
 	pip3 install -r requirements.txt
 	ansible-galaxy install -r requirements.yaml
