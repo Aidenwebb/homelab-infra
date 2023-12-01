@@ -2,3 +2,9 @@ firewalls:
   hosts:
     opnsensefw01:
       ansible_host: 192.168.1.1
+
+mgmt_servers:
+  hosts:
+    mgmt_host:
+      ansible_host: 10.130.0.251
+      mac_address: "b8:85:84:b1:fc:58"

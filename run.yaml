@@ -82,6 +82,11 @@
       #   range: 10.130.0.100 - 10.130.0.119
       # DHCP 111InfraBareMetalServers
       #   enabled: true
+      #   dns_servers: "10.130.0.129"
+      #   domain_name: baremetal.homelan.win
+      # search_domain_list: [
+      #   "baremetal.homelan.win",
+      # ]
       #   range: 10.130.0.230 - 10.130.0.249
       # DHCP 120PAMDataStores
       #   enabled: true
@@ -90,3 +95,9 @@
       #   enabled: true
       #   range: 10.130.1.230 - 10.130.1.249
 
+      ## DHCP Reservations
+      # DHCP 111InfraBareMetalServers
+      #   Mac_Address: b8:85:84:b1:fc:58 (mgmt_host.mac_address)
+      #   IP_address: 10.130.0.251
+      #   Hostname: mgmt
+      #   Description: Management Server Host/Access interface
