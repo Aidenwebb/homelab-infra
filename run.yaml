@@ -99,3 +99,10 @@
   #       - 'vars/vault.yaml'
   #   tasks:
   #     - name: Install PostgreSQL
+
+  - hosts: hestia
+    become: true
+    roles:
+      - role: grog.package
+        tags: packages
+
