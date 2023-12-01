@@ -1,0 +1,25 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: true
+
+- name: add universe repo
+  command: add-apt-repository -y universe
+  
+- name: Update apt cache
+  apt:
+    update_cache: true
+
+- name: Install qemu guest agent
+  apt:
+    name: qemu-guest-agent
+    state: present
+  register: qemu_installed
+
+- name: Upgrade all packages
+  apt:
+    upgrade: full
+
+- name: reboot host
+  reboot:
+  when: qemu_installed.changed

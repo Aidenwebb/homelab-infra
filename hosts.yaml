@@ -11,7 +11,8 @@ mgmt_servers:
       ansible_password: "{{ mgmt_pve.ansible_password }}"
       mac_address: "b8:85:84:b1:fc:58"
 
-ubuntu_2204_servers:
+virtual_servers_ubuntu:
   hosts:
     maas_psql:
+      ansible_user: aiden
       ansible_host: 10.130.1.5
