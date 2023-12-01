@@ -16,6 +16,9 @@ virtual_servers_ubuntu:
     maas_psql:
       ansible_user: "{{ main_username }}"
       ansible_host: 10.130.1.5
+
+all:
+  hosts:    
     hestia:
       ansible_user: "{{ main_username }}"
       ansible_host: hestia.home.homelan.win
