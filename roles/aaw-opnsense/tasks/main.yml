@@ -65,17 +65,27 @@
 # DHCP 111InfraBareMetalServers
 #   enabled: true
 #   dns_servers: "10.130.0.129"
-#   domain_name: baremetal.homelan.win
+#   domain_name: baremetal.home.homelan.win
 # search_domain_list: [
-#   "baremetal.homelan.win",
+#   "baremetal.home.homelan.win",
 # ]
 #   range: 10.130.0.230 - 10.130.0.249
 # DHCP 120PAMDataStores
 #   enabled: true
 #   range: 10.130.1.100 - 10.130.1.119
+#   dns_servers: "10.130.1.1"
+#   domain_name: data.pam.home.homelan.win
+# search_domain_list: [
+#   "data.pam.home.homelan.win",
+# ]
 # DHCP 121PAMApplications
 #   enabled: true
 #   range: 10.130.1.230 - 10.130.1.249
+#   dns_servers: "10.130.1.129"
+#   domain_name: apps.pam.home.homelan.win
+# search_domain_list: [
+#   "apps.pam.home.homelan.win",
+# ]
 
 ## DHCP Reservations
 # DHCP 111InfraBareMetalServers
