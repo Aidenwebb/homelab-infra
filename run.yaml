@@ -56,7 +56,7 @@
 
       # At the moment, VLAN's need to be manually named via GUI, and manually assigned via GUI
       # Assign vlan 110
-      #   description: InfraOOBManagement
+      #   description: 110InfraOOBManagement
       #   interface: enabled
       #   ipv4: static IPv4
       #   ipv4_address: 10.130.0.1/25
@@ -75,5 +75,18 @@
       #   interface: enabled
       #   ipv4: static IPv4
       #   ipv4_address: 10.130.1.129/25
-
+      
+      # At the moment, DHCP settings need to be assigned manually in the GUI
+      # DHCP 110InfraOOBManagement
+      #   enabled: true
+      #   range: 10.130.0.100 - 10.130.0.119
+      # DHCP 111InfraBareMetalServers
+      #   enabled: true
+      #   range: 10.130.0.230 - 10.130.0.249
+      # DHCP 120PAMDataStores
+      #   enabled: true
+      #   range: 10.130.1.100 - 10.130.1.119
+      # DHCP 121PAMApplications
+      #   enabled: true
+      #   range: 10.130.1.230 - 10.130.1.249
 
