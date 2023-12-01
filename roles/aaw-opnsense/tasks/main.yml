@@ -1,0 +1,120 @@
+---
+- name: Add Infra - OOB Management VLAN
+  ansibleguy.opnsense.interface_vlan:
+    description: "Infra - OOB Management"
+    interface: "igc0"
+    vlan: 110
+    priority: 0
+    # device: vlan0.0.110
+    reload: false
+
+- name: Add Infra - BareMetal VLAN
+  ansibleguy.opnsense.interface_vlan:
+    description: "Infra - BareMetal Servers"
+    interface: "igc0"
+    vlan: 111
+    priority: 0
+    # device: vlan0.0.111
+    reload: false
+
+- name: Add PAM - DataStores VLAN
+  ansibleguy.opnsense.interface_vlan:
+    description: "PAM - DataStores"
+    interface: "igc0"
+    vlan: 120
+    priority: 0
+    # device: vlan0.0.120
+    reload: false
+
+- name: Add PAM - Applications VLAN
+  ansibleguy.opnsense.interface_vlan:
+    description: "PAM - Applications"
+    interface: "igc0"
+    vlan: 121
+    priority: 0
+    # device: vlan0.0.121
+    reload: false
+    
+
+# At the moment, VLAN's need to be manually named via GUI, and manually assigned via GUI
+# Assign vlan 110
+#   description: 110InfraOOBManagement
+#   interface: enabled
+#   ipv4: static IPv4
+#   ipv4_address: 10.130.0.1/25
+# Assign vlan 111
+#   description: 111InfraBareMetalServers
+#   interface: enabled
+#   ipv4: static IPv4
+#   ipv4_address: 10.130.0.129/25
+# Assign vlan 120
+#   description: 120PAMDataStores
+#   interface: enabled
+#   ipv4: static IPv4
+#   ipv4_address: 10.130.1.1/25
+# Assign vlan 121
+#   description: 121PAMApplications
+#   interface: enabled
+#   ipv4: static IPv4
+#   ipv4_address: 10.130.1.129/25
+
+# At the moment, DHCP settings need to be assigned manually in the GUI
+# DHCP 110InfraOOBManagement
+#   enabled: true
+#   range: 10.130.0.100 - 10.130.0.119
+# DHCP 111InfraBareMetalServers
+#   enabled: true
+#   dns_servers: "10.130.0.129"
+#   domain_name: baremetal.homelan.win
+# search_domain_list: [
+#   "baremetal.homelan.win",
+# ]
+#   range: 10.130.0.230 - 10.130.0.249
+# DHCP 120PAMDataStores
+#   enabled: true
+#   range: 10.130.1.100 - 10.130.1.119
+# DHCP 121PAMApplications
+#   enabled: true
+#   range: 10.130.1.230 - 10.130.1.249
+
+## DHCP Reservations
+# DHCP 111InfraBareMetalServers
+#   Mac_Address: b8:85:84:b1:fc:58 (mgmt_host.mac_address)
+#   IP_address: 10.130.0.251
+#   Hostname: mgmt
+#   Description: Management Server Host/Access interface
+
+# Aliases
+- name: Add Alias - RFC1918
+  ansibleguy.opnsense.alias:
+    name: RFC1918
+    type: 'network'
+    description: Local Network Subnets from RFC1918
+    content: [
+      "10.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16"
+    ]
+    state: present
+
+## Firewall Rules
+# 111InfraBareMetalServers
+# Allow any within network
+#   action: pass
+#   interface: 111InfraBareMetalServers
+#   direction: in
+#   tcp_ip_version: IPv4
+#   protocol: any
+#   source: 111InfraBareMetalServers net
+#   destination: 111InfraBareMetalServers net
+#   description: Allow any within network
+# Allow Outbound access to internet
+#   action: pass
+#   interface: 111InfraBareMetalServers
+#   direction: in
+#   tcp_ip_version: IPv4
+#   protocol: any
+#   source: 111InfraBareMetalServers net
+#   destination: RFC1918
+#   destination_invert: true
+#   description: Allow Outbound access to internet
