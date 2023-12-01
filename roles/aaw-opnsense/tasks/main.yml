@@ -128,3 +128,23 @@
 #   destination: RFC1918
 #   destination_invert: true
 #   description: Allow Outbound access to internet
+# 120PAMDataStores
+# Allow any within network
+#   action: pass
+#   interface: 120PAMDataStores
+#   direction: in
+#   tcp_ip_version: IPv4
+#   protocol: any
+#   source: 120PAMDataStores net
+#   destination: 120PAMDataStores net
+#   description: Allow any within network
+# Allow Outbound access to internet
+#   action: pass
+#   interface: 120PAMDataStores
+#   direction: in
+#   tcp_ip_version: IPv4
+#   protocol: any
+#   source: 120PAMDataStores net
+#   destination: RFC1918
+#   destination_invert: true
+#   description: Allow Outbound access to internet
