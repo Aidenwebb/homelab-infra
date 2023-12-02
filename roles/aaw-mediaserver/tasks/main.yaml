@@ -1,8 +1,7 @@
 ---
-- name: Mount media NFS
-  ansible.posix.mount:
-    src: nas01.home.homelan.win:/MediaLib
-    path: /mnt/medialib
-    opts: nfsvers=3
-    state: mounted
-    fstype: nfs 
+
+- name: Import NFS Tasks
+  ansible.builtin.import_tasks: nfs.yaml
+
+- name: Import Jellyfin tasks
+  ansible.builtin.import_tasks: jellyfin.yaml

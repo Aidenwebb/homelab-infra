@@ -1,0 +1,13 @@
+---
+- name: Install NFS client libraries
+  ansible.builtin.apt:
+    name: nfs-common
+    state: present
+
+- name: Mount media NFS
+  ansible.posix.mount:
+    src: nas01.home.homelan.win:/MediaLib
+    path: /mnt/medialib
+    opts: nfsvers=3
+    state: mounted
+    fstype: nfs

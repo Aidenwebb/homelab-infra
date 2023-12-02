@@ -107,6 +107,7 @@
         tags: packages
       - role: geerlingguy.docker
       - role: aaw-mediaserver
+        tags: mediaserver
 
     tasks:
 
