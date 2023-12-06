@@ -112,5 +112,5 @@
         tags: mediaserver
       - role: aaw.traefik
         traefik__cloudflare_email: "{{ hestia.traefik__cloudflare_email }}"
-        traefik__cloudflare_api_key: "{{ hestia.traefik__cloudflare_api_key }}"
+        traefik__cloudflare_dns_api_token: "{{ hestia.traefik__cloudflare_dns_api_token }}"
         tags: traefik
