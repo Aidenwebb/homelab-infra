@@ -3,4 +3,7 @@ roles:
 - src: geerlingguy.docker
 
 collections:
+- ansible.posix
 - ansibleguy.opnsense
+- community.general
+- community.docker
