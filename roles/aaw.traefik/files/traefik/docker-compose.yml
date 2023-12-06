@@ -1,0 +1,35 @@
+---
+version: "3.4"
+
+networks:
+  default:
+    name: traefik_proxy
+
+services:
+  traefik:
+    image: traefik:latest
+    container_name: tr
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/etc/docker-stacks.d/traefik/letsencrypt:/letsencrypt"
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.cloudflareresolver.acme.dnschallenge=true"
+      - "--certificatesresolvers.cloudflareresolver.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.cloudflareresolver.acme.email=${CLOUDFLARE_EMAIL}"
+      - "--certificatesresolvers.cloudflareresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.cloudflareresolver.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"

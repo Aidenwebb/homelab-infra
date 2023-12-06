@@ -1,0 +1,59 @@
+---
+
+- name: Debug cf_email
+  ansible.builtin.debug:
+    var: traefik__cloudflare_email
+
+- name: Debug cf_key
+  ansible.builtin.debug:
+    var: traefik__cloudflare_api_key
+
+- name: Make compose directory
+  ansible.builtin.file:
+    path: /opt/docker-stacks.d/traefik/
+    state: directory
+    mode: "0750"
+  register: remote_compose_directory
+
+- name: Make letsencrypt directory
+  ansible.builtin.file:
+    path: /etc/docker-stacks.d/traefik/letsencrypt
+    state: directory
+    mode: "0750"
+  register: remote_data_directory
+
+- name: Debug compose directory
+  ansible.builtin.debug:
+    var: remote_compose_directory
+
+- name: Copy env template
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/traefik/.env.j2"
+    dest: "{{ remote_compose_directory.path }}/.env"
+    mode: "640"
+
+- name: Copy docker-compose.yml
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/traefik/docker-compose.yml"
+    dest: "{{ remote_compose_directory.path }}"
+    mode: "0640"
+
+- name: Install pip3
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+
+- name: Install Pip docker modules
+  ansible.builtin.pip:
+    name:
+      - docker
+      - docker-compose>=1.7.0,<2.0.0
+
+- name: Docker Compose Up
+  community.docker.docker_compose:
+    project_src: "{{ remote_compose_directory.path }}"
+  register: output
+
+- name: Debug compose
+  ansible.builtin.debug:
+    var: output

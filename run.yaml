@@ -102,15 +102,15 @@
 
   - hosts: hestiapi
     become: true
+    vars_files:
+      - 'vars/vault.yaml'
     roles:
       - role: grog.package
         tags: packages
       - role: geerlingguy.docker
       - role: aaw-mediaserver
         tags: mediaserver
-
-    tasks:
-
-
-
-        
+      - role: aaw.traefik
+        traefik__cloudflare_email: "{{ hestia.traefik__cloudflare_email }}"
+        traefik__cloudflare_api_key: "{{ hestia.traefik__cloudflare_api_key }}"
+        tags: traefik
