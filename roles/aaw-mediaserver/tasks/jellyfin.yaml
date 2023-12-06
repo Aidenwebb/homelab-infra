@@ -1,9 +1,4 @@
 ---
-- name: Install OpenMax libraries
-  ansible.builtin.apt:
-    name: libomxil-bellagio0
-    state: present
-
 - name: Make config directory
   ansible.builtin.file:
     path: /etc/docker-stacks.d/jellyfin/config
