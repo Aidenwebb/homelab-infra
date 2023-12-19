@@ -1,0 +1,5 @@
+virtual_servers_debian:
+  hosts:
+    atlas:
+      ansible_user: "{{ main_username }}"
+      ansible_host: 192.168.30.10

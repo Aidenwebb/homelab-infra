@@ -16,8 +16,9 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "/etc/docker-stacks.d/traefik/letsencrypt:/letsencrypt"
     command:
-      - "--log.level=DEBUG"
+      - "--log.level=${LOG_LEVEL}"
       - "--api.insecure=true"
+      - "--api.debug=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
@@ -33,3 +34,21 @@ services:
       - "80:80"
       - "443:443"
       - "8080:8080"
+    labels:
+      #dashboard
+      traefik.enable: true
+      traefik.http.routers.traefik-api.rule: Host(`traefik.${ROOT_DOMAIN}`)
+      traefik.http.routers.traefik-api.entryPoints: websecure
+      traefik.http.routers.traefik-api.tls: true
+      traefik.http.routers.traefik-api.tls.certresolver: cloudflareresolver
+      traefik.http.routers.traefik-api.tls.domains[0].main: "${ROOT_DOMAIN}"
+      traefik.http.routers.traefik-api.tls.domains[0].sans: "*.${ROOT_DOMAIN}"
+      traefik.http.routers.traefik-api.service: api@internal
+      traefik.http.routers.traefik-api.middlewares: dashboardauth@docker
+      # redirect all http to https
+      traefik.http.routers.http-catchall.rule: hostregexp(`{host:.+}`)
+      traefik.http.routers.http-catchall.entrypoints: web
+      traefik.http.routers.http-catchall.middlewares: redirect-to-https@docker
+      traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
+      #basic auth
+      traefik.http.middlewares.dashboardauth.basicauth.users: "user:{SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=" # user:password at the moment it's literally "user:password"

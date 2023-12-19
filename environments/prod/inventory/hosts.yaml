@@ -1,0 +1,28 @@
+firewalls:
+  hosts:
+    opnsensefw01:
+      ansible_host: 192.168.1.1
+
+mgmt_servers:
+  hosts:
+    mgmt_pve:
+      ansible_host: 10.130.0.251
+      ansible_user: root
+      ansible_password: "{{ mgmt_pve.ansible_password }}"
+      mac_address: "b8:85:84:b1:fc:58"
+
+virtual_servers_ubuntu:
+  hosts:
+    maas_psql:
+      ansible_user: "{{ main_username }}"
+      ansible_host: 10.130.1.5
+
+all:
+  hosts:    
+    hestia:
+      ansible_user: "{{ main_username }}"
+      ansible_host: hestia.home.homelan.win
+  children:
+    hestiapi:
+      hosts:
+        hestia:

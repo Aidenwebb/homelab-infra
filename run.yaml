@@ -111,6 +111,20 @@
       - role: aaw-mediaserver
         tags: mediaserver
       - role: aaw.traefik
-        traefik__cloudflare_email: "{{ hestia.traefik__cloudflare_email }}"
-        traefik__cloudflare_dns_api_token: "{{ hestia.traefik__cloudflare_dns_api_token }}"
+        traefik__cloudflare_email: "{{ cloudflare.traefik__cloudflare_email }}"
+        traefik__cloudflare_dns_api_token: "{{ cloudflare.traefik__cloudflare_dns_api_token }}"
+        tags: traefik
+
+  - hosts: atlas
+    become: true
+    vars_files:
+      - 'vars/vault.yaml'
+    roles:
+      - role: grog.package
+        tags: packages
+      - role: geerlingguy.docker
+      - role: aaw.traefik
+        traefik__root_domain: "test.homelan.win"
+        traefik__cloudflare_email: "{{ cloudflare.traefik__cloudflare_email }}"
+        traefik__cloudflare_dns_api_token: "{{ cloudflare.traefik__cloudflare_dns_api_token }}"
         tags: traefik

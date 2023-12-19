@@ -1,3 +1,4 @@
 ---
 traefik__cloudflare_email:
 traefik__cloudflare_dns_api_token:
+traefik__root_domain:

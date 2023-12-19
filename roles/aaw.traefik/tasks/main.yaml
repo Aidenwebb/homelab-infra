@@ -15,6 +15,12 @@
     mode: "0750"
   register: remote_compose_directory
 
+- name: Docker Compose Down
+  shell:
+    cmd: docker compose down
+    chdir: "{{ remote_compose_directory.path }}"
+  register: output
+
 - name: Make letsencrypt directory
   ansible.builtin.file:
     path: /etc/docker-stacks.d/traefik/letsencrypt
@@ -47,11 +53,13 @@
   ansible.builtin.pip:
     name:
       - docker
+      - pyyaml
       - docker-compose>=1.7.0,<2.0.0
 
 - name: Docker Compose Up
-  community.docker.docker_compose:
-    project_src: "{{ remote_compose_directory.path }}"
+  shell:
+    cmd: docker compose up -d
+    chdir: "{{ remote_compose_directory.path }}"
   register: output
 
 - name: Debug compose
